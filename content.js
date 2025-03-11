@@ -14,43 +14,60 @@ const rickrollVideos = new Set([
   "lpiB2wMc49g",
   "YdOsjhNLSd8",
   "hdxYROhhgVE",
-  "0k7BvzQRrOI"
+  "0k7BvzQRrOI",
 ]);
 
+const session = sessionStorage;
+const currentURL = location.href;
+
 function getVideoId(url) {
-  try {
-    return new URL(url).searchParams.get("v");
-  } catch {
-    return null;
-  }
+  const idx = url.indexOf("?v=");
+  if (idx === -1) return null;
+  const endIdx = url.indexOf("&", idx);
+  return endIdx === -1
+    ? url.substring(idx + 3)
+    : url.substring(idx + 3, endIdx);
 }
 
-function isRickroll(videoId) {
-  return rickrollVideos.has(videoId);
+function stopAllVideos() {
+  document.querySelectorAll("video").forEach((video) => {
+    video.pause();
+    video.src = "";
+  });
 }
 
-function antiRickroll(videoId) {
-  if (sessionStorage.getItem("rickroll-continue") === "true") {
-    sessionStorage.removeItem("rickroll-continue");
+function muteTab() {
+  chrome.runtime.sendMessage({ action: "muteTab" });
+}
+
+function unmuteTab() {
+  chrome.runtime.sendMessage({ action: "unmuteTab" });
+}
+
+function antiRickroll() {
+  if (session.getItem("rickroll-continue")) {
+    session.removeItem("rickroll-continue");
+    unmuteTab();
     return;
   }
 
-  document.body.innerHTML = `
-    <div class="rickroll-warning">
-      <h1 class="rickroll-text">${chrome.i18n.getMessage('Warning')}</h1>
-      <button id="ar-close">${chrome.i18n.getMessage('Exit')}</button>
-      <button id="ar-continue">${chrome.i18n.getMessage('Continue')}</button>
-    </div>
-  `;
+  muteTab();
+  stopAllVideos();
 
-  document.getElementById("ar-close").onclick = () => window.close();
+  document.body.innerHTML = `
+      <div class="rickroll-warning">
+        <h1 class="rickroll-text">${chrome.i18n.getMessage("Warning")}</h1>
+        <button id="ar-close">${chrome.i18n.getMessage("Exit")}</button>
+        <button id="ar-continue">${chrome.i18n.getMessage("Continue")}</button>
+      </div>
+    `;
+
+  document.getElementById("ar-close").onclick = window.close;
   document.getElementById("ar-continue").onclick = () => {
-    sessionStorage.setItem("rickroll-continue", "true");
+    session.setItem("rickroll-continue", "true");
     location.reload();
   };
 }
 
-const videoId = getVideoId(location.href);
-if (videoId && isRickroll(videoId)) {
-  antiRickroll(videoId);
-}
+const videoId = getVideoId(currentURL);
+videoId && rickrollVideos.has(videoId) && antiRickroll();
