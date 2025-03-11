@@ -15,10 +15,4 @@ chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === "update") {
     chrome.tabs.create({ url: "https://anti-rickroll.commonjs.work" });
   }
-
-  chrome.storage.local.get({ ignoreList: [] }, (data) => {
-    if (!data.ignoreList) {
-      chrome.storage.local.set({ ignoreList: [] });
-    }
-  });
 });
