@@ -62,7 +62,9 @@ function antiRickroll() {
       </div>
     `;
 
-  document.getElementById("ar-close").onclick = window.close;
+  document.getElementById("ar-close").onclick = () => {
+    window.close();
+  };
   document.getElementById("ar-continue").onclick = () => {
     session.setItem("rickroll-continue", "true");
     location.reload();
