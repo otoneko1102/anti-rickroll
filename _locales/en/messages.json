@@ -1,0 +1,17 @@
+{
+  "Name": {
+    "message": "Anti Rickroll"
+  },
+  "Description": {
+    "message": "Detects Rickroll videos and blocks them with a warning."
+  },
+  "Warning": {
+    "message": "⚠️This video is Rickroll⚠️"
+  },
+  "Exit": {
+    "message": "Exit"
+  },
+  "Continue": {
+    "message": "Continue"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "__MSG_Name__",
+  "version": "1.0.0",
+  "description": "__MSG_Description__",
+  "content_scripts": [
+    {
+      "matches": ["*://www.youtube.com/*"],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ],
+  "icons": {
+    "16": "icons/16x16.png",
+    "48": "icons/48x48.png",
+    "128": "icons/128x128.png"
+  }
+}
