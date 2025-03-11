@@ -4,6 +4,10 @@
   "name": "__MSG_Name__",
   "version": "1.0.0",
   "description": "__MSG_Description__",
+  "permissions": ["tabs"],
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": ["*://www.youtube.com/*"],
