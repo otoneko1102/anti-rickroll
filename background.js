@@ -7,6 +7,7 @@ const rickrollVideos = new Set([
   "dmA6_0ZwWb4",
   "doEqUhFiQS4",
   "dQw4w9WgXcQ",
+  "ds9xMnFJC50",
   "fMCN-b0ic_k",
   "GtL1huin9EE",
   "H8ZH_mkfPUY",
